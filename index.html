@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<title>Аутодеструктивті мінез-құлық және оның алдын алу жолдары</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css" id="theme">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+
+<style>
+  :root{
+    --navy:#1F3A5F;
+    --navy2:#2C4F82;
+    --accent:#C93C3C;
+    --accent2:#E85A4F;
+    --gold:#E0A03A;
+    --green:#2E7D32;
+    --light:#F5F7FB;
+    --dark:#222;
+    --muted:#666;
+    --line:#E3E7EE;
+  }
+  html,body{height:100%;margin:0;padding:0;overflow:hidden;}
+  .reveal{font-family:'Inter','Segoe UI','Helvetica Neue',Arial,sans-serif;color:var(--dark);font-size:24px;}
+  .reveal h1,.reveal h2,.reveal h3,.reveal h4{
+    font-family:'Inter','Segoe UI',sans-serif;color:var(--navy);
+    text-transform:none;letter-spacing:-.01em;font-weight:800;margin:.1em 0;
+  }
+  .reveal section{text-align:left;padding:0;}
+  .reveal section p{margin:.3em 0;line-height:1.4;}
+  .reveal .slide-number{background:rgba(31,58,95,.8);color:#fff;padding:4px 10px;border-radius:20px;font-size:14px;}
+  .reveal .controls{color:var(--navy);}
+  .reveal .progress{color:var(--accent);height:4px;}
+  .reveal a{color:var(--accent);}
+
+  /* ---- Title slide ---- */
+  .title-slide{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,#3E6BA5 100%)!important;
+    color:#fff!important;text-align:center;height:100%;display:flex!important;
+    flex-direction:column;justify-content:center;padding:2em;position:relative;overflow:hidden;
+  }
+  .title-slide::before{
+    content:"";position:absolute;top:-100px;right:-100px;width:400px;height:400px;
+    background:radial-gradient(circle,var(--accent2) 0%,transparent 70%);opacity:.35;
+    animation:float 6s ease-in-out infinite;
+  }
+  .title-slide::after{
+    content:"";position:absolute;bottom:-150px;left:-150px;width:500px;height:500px;
+    background:radial-gradient(circle,var(--gold) 0%,transparent 70%);opacity:.2;
+    animation:float 8s ease-in-out infinite reverse;
+  }
+  @keyframes float{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-20px) scale(1.05);}}
+  .title-slide h1{color:#fff!important;font-size:1.6em!important;line-height:1.15;margin:.2em 0;text-shadow:0 4px 20px rgba(0,0,0,.3);}
+  .title-slide .uni{font-size:.55em;opacity:.9;margin-bottom:.2em;}
+  .title-slide .ministry{font-size:.42em;opacity:.8;margin-bottom:.3em;}
+  .title-slide .badge{
+    display:inline-block;background:rgba(255,255,255,.15);backdrop-filter:blur(10px);
+    padding:.3em 1em;border-radius:50px;font-size:.42em;letter-spacing:.2em;
+    text-transform:uppercase;margin-bottom:.6em;border:1px solid rgba(255,255,255,.3);
+  }
+  .title-slide .meta{margin-top:.8em;font-size:.42em;opacity:.95;line-height:1.6;}
+  .title-slide .meta strong{color:var(--gold);}
+
+  /* ---- Headers ---- */
+  .slide-header{
+    border-bottom:3px solid var(--accent);padding-bottom:.2em;margin-bottom:.4em;
+    font-size:1.1em!important;font-weight:800;color:var(--navy);
+  }
+  .slide-number-big{
+    position:absolute;top:0;right:0;font-size:.55em;color:var(--muted);
+    background:var(--light);padding:3px 10px;border-radius:20px;font-weight:600;
+  }
+
+  /* ---- Bullet styles ---- */
+  .icon-list{list-style:none!important;margin:0!important;padding:0!important;}
+  .icon-list li{
+    padding:.25em 0 .25em 1.6em;position:relative;font-size:.65em;line-height:1.35;
+    border-bottom:1px solid var(--line);
+  }
+  .icon-list li::before{
+    content:"▸";position:absolute;left:.3em;color:var(--accent);font-weight:bold;
+  }
+
+  /* ---- Cards ---- */
+  .cards{display:grid;gap:.5em;}
+  .cards.c2{grid-template-columns:1fr 1fr;}
+  .cards.c3{grid-template-columns:repeat(3,1fr);}
+  .cards.c4{grid-template-columns:repeat(4,1fr);}
+  .card{
+    background:#fff;border-radius:10px;padding:.6em .8em;box-shadow:0 2px 10px rgba(0,0,0,.08);
+    border-left:4px solid var(--accent);transition:transform .3s,box-shadow .3s;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.15);}
+  .card.navy{border-color:var(--navy);}
+  .card.gold{border-color:var(--gold);}
+  .card.green{border-color:var(--green);}
+  .card h4{font-size:.7em;margin:0 0 .25em 0;color:var(--navy);font-weight:700;}
+  .card p{font-size:.55em;margin:0;color:var(--dark);line-height:1.35;}
+
+  .stat-card{
+    background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;
+    border-radius:14px;padding:.8em .5em;text-align:center;
+    box-shadow:0 6px 20px rgba(31,58,95,.3);
+  }
+  .stat-card .val{font-size:1.8em;font-weight:900;line-height:1;color:var(--gold);}
+  .stat-card .lbl{font-size:.5em;opacity:.9;margin-top:.3em;text-transform:uppercase;letter-spacing:.08em;}
+
+  /* ---- Tables ---- */
+  .data-table{width:100%;border-collapse:separate;border-spacing:0;font-size:.55em;}
+  .data-table th{
+    background:var(--navy);color:#fff;padding:.5em .7em;text-align:left;font-weight:700;
+  }
+  .data-table th:first-child{border-radius:8px 0 0 0;}
+  .data-table th:last-child{border-radius:0 8px 0 0;}
+  .data-table td{padding:.4em .7em;border-bottom:1px solid var(--line);}
+  .data-table tr:nth-child(even) td{background:var(--light);}
+  .data-table tr:hover td{background:#FDF2F2;}
+
+  /* ---- Chart wrappers ---- */
+  .chart-container{position:relative;margin:auto;padding:.2em;}
+  .chart-small{height:240px;}
+  .chart-med{height:320px;}
+
+  /* ---- Model diagram ---- */
+  .model-flow{display:flex;flex-direction:column;align-items:center;gap:.25em;}
+  .model-node{
+    width:75%;padding:.5em .8em;border-radius:10px;color:#fff;text-align:center;
+    font-weight:700;font-size:.65em;box-shadow:0 3px 10px rgba(0,0,0,.15);
+    transition:transform .3s;cursor:default;
+  }
+  .model-node:hover{transform:scale(1.03);}
+  .model-arrow{color:var(--muted);font-size:1em;line-height:0;}
+
+  /* ---- Timeline ---- */
+  .timeline{display:flex;justify-content:space-between;position:relative;padding:.5em 0;}
+  .timeline::before{
+    content:"";position:absolute;top:50%;left:5%;right:5%;height:3px;
+    background:linear-gradient(90deg,var(--navy),var(--accent));
+  }
+  .timeline-step{
+    position:relative;z-index:2;background:#fff;border:3px solid var(--navy);
+    width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-weight:900;color:var(--navy);font-size:.85em;
+  }
+  .timeline-step.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  /* ---- Closing slide ---- */
+  .thanks-slide{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--accent) 100%)!important;
+    color:#fff!important;text-align:center;height:100%;display:flex!important;
+    flex-direction:column;justify-content:center;position:relative;overflow:hidden;
+  }
+  .thanks-slide h1{color:#fff!important;font-size:2.4em!important;letter-spacing:-.02em;}
+  .thanks-slide .big{font-size:4.5em!important;font-weight:900;color:var(--gold);
+    text-shadow:0 8px 30px rgba(0,0,0,.4);margin:.1em 0;}
+
+  /* Utility */
+  .text-accent{color:var(--accent);font-weight:700;}
+  .text-navy{color:var(--navy);font-weight:700;}
+  .small{font-size:.5em;color:var(--muted);}
+  .tag{display:inline-block;background:var(--light);color:var(--navy);padding:.15em .6em;
+    border-radius:20px;font-size:.5em;margin:.08em;font-weight:600;}
+
+  /* Fragment animation enhancements */
+  .reveal .fragment.fade-up{transform:translateY(30px);opacity:0;transition:all .6s cubic-bezier(.4,0,.2,1);}
+  .reveal .fragment.fade-up.visible{transform:translateY(0);opacity:1;}
+  .reveal .fragment.zoom{transform:scale(.8);opacity:0;transition:all .5s ease;}
+  .reveal .fragment.zoom.visible{transform:scale(1);opacity:1;}
+
+  .highlight-box{
+    background:linear-gradient(135deg,#FFF4E0,#FFECB8);
+    border-left:5px solid var(--gold);padding:.55em .8em;border-radius:8px;margin:.4em 0;
+    font-size:.6em;line-height:1.4;
+  }
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:.8em;align-items:center;}
+</style>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ============================ 1. TITLE ============================ -->
+<section class="title-slide">
+  <div class="ministry">ҚАЗАҚСТАН РЕСПУБЛИКАСЫ ҒЫЛЫМ ЖӘНЕ ЖОҒАРЫ БІЛІМ МИНИСТРЛІГІ</div>
+  <div class="uni"><strong>Х. Досмұхамедов атындағы Атырау университеті</strong></div>
+  <div class="badge">Магистрлік диссертация</div>
+  <h1>АУТОДЕСТРУКТИВТІ<br>МІНЕЗ-ҚҰЛЫҚ<br><span style="color:var(--gold);">және оның алдын алу жолдары</span></h1>
+  <div class="meta">
+    <strong>Магистрант:</strong> Төкенова Шынар Кадимқызы<br>
+    <strong>Ғылыми жетекші:</strong> Сабирова Ж.Н., психология ғылымының кандидаты<br>
+    <strong>Білім бағдарламасы:</strong> 7М01101 – Педагогика және психология<br>
+    <em style="opacity:.8;">Атырау, 2026 ж.</em>
+  </div>
+</section>
+
+<!-- ============================ 2. OUTLINE ============================ -->
+<section>
+  <div class="slide-number-big">02</div>
+  <h2 class="slide-header">Баяндаманың құрылымы</h2>
+  <div class="cards c4">
+    <div class="card fragment zoom"><h4>1–4</h4><p>Өзектілік, мақсат, міндеттер, әдіснама</p></div>
+    <div class="card navy fragment zoom"><h4>5–9</h4><p>Теориялық негіздер, факторлар, модель</p></div>
+    <div class="card gold fragment zoom"><h4>10–16</h4><p>Эмпирикалық зерттеу, нәтижелер, графиктер</p></div>
+    <div class="card green fragment zoom"><h4>17–20</h4><p>Бағдарлама, тиімділік, қорытынды</p></div>
+  </div>
+  <div class="highlight-box fragment fade-up">
+    <strong class="text-navy">Зерттеу өзегі:</strong> жасөспірімдердің өзіне зиян келтіретін мінез-құлқын психологиялық тұрғыдан түсіну және білім беру ұйымдарында оның алдын алу жолдарын ғылыми негіздеу.
+  </div>
+</section>
+
+<!-- ============================ 3. RELEVANCE ============================ -->
+<section>
+  <div class="slide-number-big">03</div>
+  <h2 class="slide-header">Зерттеудің өзектілігі</h2>
+  <div class="two-col">
+    <div>
+      <p style="font-size:.78em;line-height:1.5;">
+        Қазіргі жаһандану кезеңінде жасөспірімдер арасында эмоционалдық күйзеліс,
+        өмірлік мағына дағдарысы және деструктивті мінез-құлық жиі байқалуда.
+      </p>
+      <ul class="icon-list">
+        <li class="fragment fade-up">Суицид — 15–19 жас аралығында өлім-жітімнің басты себептерінің бірі</li>
+        <li class="fragment fade-up">Буллинг пен кибербуллингтің таралуы</li>
+        <li class="fragment fade-up">Өзіне зақым келтіру (self-harm) жағдайларының өсуі</li>
+        <li class="fragment fade-up">Аддиктивті мінез-құлықтың жасаруы</li>
+      </ul>
+    </div>
+    <div>
+      <div class="cards c2">
+        <div class="stat-card fragment zoom"><div class="val">23%</div><div class="lbl">Жоғары тәуекел тобы</div></div>
+        <div class="stat-card fragment zoom"><div class="val">30%</div><div class="lbl">Депрессия белгілері</div></div>
+        <div class="stat-card fragment zoom"><div class="val">54%</div><div class="lbl">Орташа мазасыздық</div></div>
+        <div class="stat-card fragment zoom"><div class="val">23%</div><div class="lbl">Жоғары агрессия</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 4. GOAL & TASKS ============================ -->
+<section>
+  <div class="slide-number-big">04</div>
+  <h2 class="slide-header">Мақсат пен міндеттер</h2>
+  <div class="highlight-box fragment fade-up">
+    <strong class="text-accent">МАҚСАТЫ:</strong>
+    Аутодеструктивті мінез-құлықтың психологиялық ерекшеліктерін анықтау және оның алдын алудың тиімді психологиялық-педагогикалық жолдарын ғылыми тұрғыда негіздеу.
+  </div>
+  <h3 style="font-size:1em;color:var(--accent);margin-top:.6em;">МІНДЕТТЕРІ:</h3>
+  <div class="cards c2">
+    <div class="card fragment fade-up"><h4>① Теориялық талдау</h4><p>Ұғымның ғылыми негіздерін талдау, түрлері мен факторларын жүйелеу</p></div>
+    <div class="card navy fragment fade-up"><h4>② Көріністерін анықтау</h4><p>Жас кезеңдеріне байланысты аутодеструктивті мінез-құлықтың көріністерін анықтау</p></div>
+    <div class="card gold fragment fade-up"><h4>③ Диагностиканы сипаттау</h4><p>Психологиялық диагностикалау әдістерін сипаттау</p></div>
+    <div class="card green fragment fade-up"><h4>④ Алдын алу мазмұны</h4><p>Психологиялық жұмыстың мазмұнын айқындау, бағдарлама әзірлеу</p></div>
+  </div>
+</section>
+
+<!-- ============================ 5. OBJECT, SUBJECT, METHODS ============================ -->
+<section>
+  <div class="slide-number-big">05</div>
+  <h2 class="slide-header">Зерттеу объектісі, пәні және әдіснамасы</h2>
+  <div class="cards c2">
+    <div class="card"><h4>🎯 Зерттеу нысаны</h4><p>Жеке тұлғаның мінез-құлық жүйесі</p></div>
+    <div class="card navy"><h4>🔬 Зерттеу пәні</h4><p>Аутодеструктивті мінез-құлықтың психологиялық ерекшеліктері мен оның алдын алу жолдары</p></div>
+  </div>
+  <h3 style="font-size:1em;color:var(--accent);margin-top:.7em;">Әдіснамалық қағидалар:</h3>
+  <div style="text-align:center;margin-top:.3em;">
+    <span class="tag">✓ Жүйелілік</span>
+    <span class="tag">✓ Детерминизм</span>
+    <span class="tag">✓ Даму</span>
+    <span class="tag">✓ Гуманистік</span>
+  </div>
+  <h3 style="font-size:1em;color:var(--accent);margin-top:.6em;">Әдістер:</h3>
+  <div style="text-align:center;">
+    <span class="tag">📖 Теориялық талдау</span>
+    <span class="tag">👁 Бақылау</span>
+    <span class="tag">💬 Әңгімелесу</span>
+    <span class="tag">📝 Сауалнама</span>
+    <span class="tag">🧪 Психодиагностика</span>
+    <span class="tag">📊 Сандық/сапалық талдау</span>
+  </div>
+</section>
+
+<!-- ============================ 6. THEORETICAL FOUNDATIONS ============================ -->
+<section>
+  <div class="slide-number-big">06</div>
+  <h2 class="slide-header">Теориялық негіздер: 4 бағыт</h2>
+  <div class="cards c2" style="gap:.8em;">
+    <div class="card fragment fade-up">
+      <h4>🧠 Психоаналитикалық</h4>
+      <p><strong>З. Фрейд, К. Меннингер</strong><br>
+      Агрессияның өзіне бағытталуы, кінә сезімі, бейсаналық жазалау механизмдері.</p>
+    </div>
+    <div class="card navy fragment fade-up">
+      <h4>🌱 Гуманистік</h4>
+      <p><strong>А. Маслоу, В. Франкл</strong><br>
+      Өзін-өзі жүзеге асыру қажеттілігінің қанағаттанбауы, өмірлік мағынаның жоғалуы.</p>
+    </div>
+    <div class="card gold fragment fade-up">
+      <h4>💭 Когнитивтік</h4>
+      <p><strong>А. Бек</strong><br>
+      Когнитивтік триада: өзін/әлемді/болашақты теріс қабылдау. Иррационалды схемалар.</p>
+    </div>
+    <div class="card green fragment fade-up">
+      <h4>🤝 Әлеуметтік-психологиялық</h4>
+      <p><strong>Э. Дюркгейм, T. Joiner, Э. Шнейдман</strong><br>
+      Әлеуметтік байланыстардың әлсіреуі, қажетсіздік сезімі, психологиялық ауырсыну.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 7. TYPES ============================ -->
+<section>
+  <div class="slide-number-big">07</div>
+  <h2 class="slide-header">Аутодеструктивті мінез-құлықтың түрлері</h2>
+  <div class="cards c2" style="gap:.6em;font-size:.9em;">
+    <div class="card fragment fade-up"><h4>①&nbsp;&nbsp;Суицидтік мінез-құлық</h4><p>Өмірден өз еркімен кетуге бағытталған ойлар, ниеттер мен әрекеттер</p></div>
+    <div class="card navy fragment fade-up"><h4>②&nbsp;&nbsp;Self-harm (өзіне зақым)</h4><p>Суицидтік мақсатсыз денеге физикалық зиян келтіру әрекеттері</p></div>
+    <div class="card gold fragment fade-up"><h4>③&nbsp;&nbsp;Аддиктивті мінез-құлық</h4><p>Алкоголь, есірткі, ойын, интернет, никотинге тәуелділік</p></div>
+    <div class="card green fragment fade-up"><h4>④&nbsp;&nbsp;Тәуекелді мінез-құлық</h4><p>Өмір мен денсаулыққа қауіп төндіретін саналы әрекеттер</p></div>
+  </div>
+  <div class="card fragment fade-up" style="border-color:#8E44AD;margin-top:.5em;">
+    <h4>⑤&nbsp;&nbsp;Психосоматикалық аутодеструкция</h4>
+    <p>Психологиялық күйзелістің дене аурулары (созылмалы стресс, психосоматика) арқылы көрінуі</p>
+  </div>
+</section>
+
+<!-- ============================ 8. FACTORS CHART ============================ -->
+<section>
+  <div class="slide-number-big">08</div>
+  <h2 class="slide-header">Қалыптасу факторлары</h2>
+  <div class="chart-container" style="height:380px;">
+    <canvas id="factorsChart"></canvas>
+  </div>
+  <p class="small" style="text-align:center;margin-top:.2em;">
+    Факторлардың салыстырмалы салмағы (шартты сараптама бағасы)
+  </p>
+</section>
+
+<!-- ============================ 9. MODEL ============================ -->
+<section>
+  <div class="slide-number-big">09</div>
+  <h2 class="slide-header">Құрылымдық-функционалдық модель</h2>
+  <div class="model-flow">
+    <div class="model-node fragment fade-up" style="background:linear-gradient(135deg,#1F3A5F,#2C4F82);">
+      🌍 Макроәлеуметтік деңгей <span class="small" style="color:#ccc;">• қоғам, мәдениет, экономика</span>
+    </div>
+    <div class="model-arrow fragment">▼</div>
+    <div class="model-node fragment fade-up" style="background:linear-gradient(135deg,#3B5A8A,#567AB5);">
+      👨‍👩‍👧 Әлеуметтік орта деңгейі <span class="small" style="color:#ddd;">• отбасы, мектеп, құрдастар</span>
+    </div>
+    <div class="model-arrow fragment">▼</div>
+    <div class="model-node fragment fade-up" style="background:linear-gradient(135deg,#577AB5,#7AA0D4);">
+      💭 Тұлғалық-психологиялық деңгей <span class="small" style="color:#f0f0f0;">• өзін-өзі бағалау, эмоция, дағдарыс</span>
+    </div>
+    <div class="model-arrow fragment">▼</div>
+    <div class="model-node fragment fade-up" style="background:linear-gradient(135deg,#C93C3C,#E85A4F);">
+      ⚠️ Мінез-құлықтық деңгей <span class="small" style="color:#fff;">• self-harm, суицидтік ойлар, тәуекел</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 10. EMPIRICAL STUDY ============================ -->
+<section>
+  <div class="slide-number-big">10</div>
+  <h2 class="slide-header">Эмпирикалық зерттеу</h2>
+  <div class="cards c3">
+    <div class="stat-card"><div class="val">30</div><div class="lbl">Қатысушы</div></div>
+    <div class="stat-card" style="background:linear-gradient(135deg,var(--accent),var(--accent2));"><div class="val">7–9</div><div class="lbl">сынып</div></div>
+    <div class="stat-card" style="background:linear-gradient(135deg,var(--gold),#F0B84A);"><div class="val">4</div><div class="lbl">әдістеме</div></div>
+  </div>
+  <h3 style="font-size:.75em;color:var(--accent);margin:.4em 0 .2em 0;">Зерттеу кезеңдері:</h3>
+  <div class="timeline">
+    <div class="timeline-step fragment zoom">1</div>
+    <div class="timeline-step fragment zoom">2</div>
+    <div class="timeline-step fragment zoom">3</div>
+    <div class="timeline-step fragment zoom active">4</div>
+    <div class="timeline-step fragment zoom">5</div>
+  </div>
+  <div style="display:flex;justify-content:space-between;margin-top:.1em;font-size:.45em;text-align:center;color:var(--muted);">
+    <div style="width:60px;">Дайындық</div>
+    <div style="width:60px;">Диагностика</div>
+    <div style="width:60px;">Талдау</div>
+    <div style="width:60px;">Бағдарлама</div>
+    <div style="width:60px;">Қайта</div>
+  </div>
+</section>
+
+<!-- ============================ 11. METHODOLOGIES ============================ -->
+<section>
+  <div class="slide-number-big">11</div>
+  <h2 class="slide-header">Қолданылған психодиагностикалық әдістемелер</h2>
+  <table class="data-table">
+    <thead><tr><th>№</th><th>Автор</th><th>Әдістеме</th><th>Өлшейтіні</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1</strong></td><td>М. Розенберг</td><td>Өзін-өзі бағалау шкаласы</td><td>10 тұжырым — өзін қабылдау деңгейі</td></tr>
+      <tr><td><strong>2</strong></td><td>А. Бек</td><td>Депрессия шкаласы</td><td>21 сұрақ — эмоционалдық күйзеліс</td></tr>
+      <tr><td><strong>3</strong></td><td>Ч. Спилбергер</td><td>Мазасыздық тесті</td><td>40 сұрақ — ситуативті + тұлғалық</td></tr>
+      <tr><td><strong>4</strong></td><td>А. Басс – А. Дарки</td><td>Агрессия сауалнамасы</td><td>Агрессияның 8 түрі</td></tr>
+    </tbody>
+  </table>
+  <div class="highlight-box" style="margin-top:.6em;">
+    <strong class="text-navy">Қосымша:</strong> бақылау, психологиялық әңгімелесу, сауалнама, диагностикалық карта
+  </div>
+</section>
+
+<!-- ============================ 12. RESULTS: SELF-ESTEEM ============================ -->
+<section>
+  <div class="slide-number-big">12</div>
+  <h2 class="slide-header">📊 Өзін-өзі бағалау деңгейі (Розенберг)</h2>
+  <div class="two-col">
+    <div class="chart-container" style="height:300px;"><canvas id="selfEsteemChart"></canvas></div>
+    <div>
+      <table class="data-table">
+        <thead><tr><th>Деңгей</th><th>Оқушы</th><th>%</th></tr></thead>
+        <tbody>
+          <tr><td>Төмен</td><td>8</td><td><strong class="text-accent">26%</strong></td></tr>
+          <tr><td>Орташа</td><td>17</td><td><strong>56%</strong></td></tr>
+          <tr><td>Жоғары</td><td>5</td><td>18%</td></tr>
+        </tbody>
+      </table>
+      <div class="highlight-box">
+        <strong>26%</strong> оқушыда өзін-өзі бағалау төмен — аутодеструкцияға бейімділіктің алғышарты.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 13. DEPRESSION ============================ -->
+<section>
+  <div class="slide-number-big">13</div>
+  <h2 class="slide-header">📊 Депрессия деңгейі (А. Бек)</h2>
+  <div class="two-col">
+    <div class="chart-container" style="height:300px;"><canvas id="depressionChart"></canvas></div>
+    <div>
+      <table class="data-table">
+        <thead><tr><th>Деңгей</th><th>Оқушы</th><th>%</th></tr></thead>
+        <tbody>
+          <tr><td>Депрессия жоқ</td><td>12</td><td>40%</td></tr>
+          <tr><td>Жеңіл</td><td>9</td><td>30%</td></tr>
+          <tr><td>Орташа</td><td>6</td><td>20%</td></tr>
+          <tr><td>Айқын</td><td>3</td><td><strong class="text-accent">10%</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="highlight-box">
+        <strong>60%</strong> оқушыда әртүрлі деңгейдегі депрессиялық белгілер бар.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 14. ANXIETY ============================ -->
+<section>
+  <div class="slide-number-big">14</div>
+  <h2 class="slide-header">📊 Мазасыздық деңгейі (Спилбергер)</h2>
+  <div class="two-col">
+    <div class="chart-container" style="height:300px;"><canvas id="anxietyChart"></canvas></div>
+    <div>
+      <table class="data-table">
+        <thead><tr><th>Деңгей</th><th>Оқушы</th><th>%</th></tr></thead>
+        <tbody>
+          <tr><td>Төмен</td><td>7</td><td>23%</td></tr>
+          <tr><td>Орташа</td><td>16</td><td><strong>54%</strong></td></tr>
+          <tr><td>Жоғары</td><td>7</td><td><strong class="text-accent">23%</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="highlight-box">
+        Жоғары мазасыздық (23%) — стресске сезімталдық пен эмоционалдық тұрақсыздық.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 15. AGGRESSION DETAILED ============================ -->
+<section>
+  <div class="slide-number-big">15</div>
+  <h2 class="slide-header">📊 Агрессия түрлері (Басс–Дарки) — радар</h2>
+  <div class="chart-container" style="height:380px;"><canvas id="aggressionRadar"></canvas></div>
+  <p class="small" style="text-align:center;margin-top:.3em;">
+    <span class="text-accent">Ең жоғары:</span> ашуланшақтық (6.5), вербалды (6.1) • <span class="text-navy">Ең төмен:</span> негативизм (4.3)
+  </p>
+</section>
+
+<!-- ============================ 16. RISK GROUPS ============================ -->
+<section>
+  <div class="slide-number-big">16</div>
+  <h2 class="slide-header">🎯 Тәуекел топтарын анықтау</h2>
+  <div class="two-col">
+    <div class="chart-container" style="height:340px;"><canvas id="riskChart"></canvas></div>
+    <div>
+      <div class="stat-card" style="background:linear-gradient(135deg,var(--accent),var(--accent2));margin-bottom:.4em;padding:.5em;">
+        <div class="val">23%</div>
+        <div class="lbl">Жоғары тәуекел — 7 оқушы</div>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,var(--gold),#F0B84A);margin-bottom:.4em;padding:.5em;">
+        <div class="val">44%</div>
+        <div class="lbl">Орташа тәуекел — 13 оқушы</div>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,var(--green),#4CAF50);padding:.5em;">
+        <div class="val">33%</div>
+        <div class="lbl">Төмен тәуекел — 10 оқушы</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 17. PROGRAM ============================ -->
+<section>
+  <div class="slide-number-big">17</div>
+  <h2 class="slide-header">«Зорлық-зомбылықсыз мектеп — қауіпсіз орта»</h2>
+  <div class="cards c3" style="margin-bottom:.5em;">
+    <div class="stat-card"><div class="val">34</div><div class="lbl">сағат</div></div>
+    <div class="stat-card" style="background:linear-gradient(135deg,var(--accent),var(--accent2));"><div class="val">6</div><div class="lbl">бөлім</div></div>
+    <div class="stat-card" style="background:linear-gradient(135deg,var(--gold),#F0B84A);"><div class="val">7+</div><div class="lbl">әдіс түрі</div></div>
+  </div>
+  <div class="cards c3" style="gap:.5em;">
+    <div class="card fragment zoom"><h4>І. Түсінік</h4><p class="small">Зорлық-зомбылық туралы • 3 сағат</p></div>
+    <div class="card navy fragment zoom"><h4>ІІ. Қарым-қатынас</h4><p class="small">Мәдениет, диалог • 6 сағат</p></div>
+    <div class="card gold fragment zoom"><h4>ІІІ. Эмпатия</h4><p class="small">Толеранттылық • 6 сағат</p></div>
+    <div class="card fragment zoom" style="border-color:#8E44AD;"><h4>ІV. Буллинг</h4><p class="small">Кибербуллинг • 6 сағат</p></div>
+    <div class="card green fragment zoom"><h4>V. Өзін-өзі реттеу</h4><p class="small">Агрессияны басқару • 6 сағат</p></div>
+    <div class="card fragment zoom" style="border-color:#00897B;"><h4>VI. Қауіпсіз орта</h4><p class="small">Қорытынды • 7 сағат</p></div>
+  </div>
+</section>
+
+<!-- ============================ 18. PROGRAM METHODS ============================ -->
+<section>
+  <div class="slide-number-big">18</div>
+  <h2 class="slide-header">Бағдарламаны іске асыру әдістері</h2>
+  <div class="cards c3" style="gap:.7em;">
+    <div class="card fragment fade-up"><h4>🎭 Тренингтер</h4><p>Эмоционалдық интеллект, өзін-өзі реттеу дағдылары</p></div>
+    <div class="card navy fragment fade-up"><h4>🎬 Рөлдік ойындар</h4><p>Конструктивті мінез-құлықты сахналау</p></div>
+    <div class="card gold fragment fade-up"><h4>🎨 Арт-терапия</h4><p>Сурет, коллаж, постер — эмоцияны білдіру</p></div>
+    <div class="card green fragment fade-up"><h4>🧘 Релаксация</h4><p>Тыныс алу, визуализация, тепе-теңдік</p></div>
+    <div class="card fragment fade-up" style="border-color:#8E44AD;"><h4>💬 Пікірталас</h4><p>Құндылықтық бағдар, саналы ұстаным</p></div>
+    <div class="card fragment fade-up" style="border-color:#00897B;"><h4>🤝 Топтық жобалар</h4><p>«Достық клубы», ұжымдық жауапкершілік</p></div>
+  </div>
+</section>
+
+<!-- ============================ 19. EFFECTIVENESS CHART ============================ -->
+<section>
+  <div class="slide-number-big">19</div>
+  <h2 class="slide-header">📈 Тиімділік — БАСТАПҚЫ vs ҚОРЫТЫНДЫ</h2>
+  <div class="chart-container" style="height:340px;"><canvas id="effectivenessChart"></canvas></div>
+  <div class="highlight-box" style="background:linear-gradient(135deg,#E8F5E9,#C8E6C9);border-color:var(--green);">
+    Мазасыздық <strong class="text-accent">↓13%</strong> • Агрессия <strong class="text-accent">↓10%</strong> • Депрессия <strong class="text-accent">↓7%</strong> • Өзін-өзі бағалау <strong class="text-accent">↑12%</strong>
+  </div>
+</section>
+
+<!-- ============================ 20. CONCLUSIONS ============================ -->
+<section>
+  <div class="slide-number-big">20</div>
+  <h2 class="slide-header">🎯 Негізгі тұжырымдар</h2>
+  <ul class="icon-list">
+    <li class="fragment fade-up"><strong>Аутодеструктивті мінез-құлық</strong> — көпфакторлы құбылыс</li>
+    <li class="fragment fade-up">Ұсынылған <strong>4 деңгейлі модель</strong> қалыптасу механизмдерін түсіндіреді</li>
+    <li class="fragment fade-up"><strong>Оқушылардың 23%-ы жоғары тәуекел тобында</strong> анықталды</li>
+    <li class="fragment fade-up">Негізгі факторлар: <strong>төмен өзін-өзі бағалау, депрессия, мазасыздық, агрессия</strong></li>
+    <li class="fragment fade-up"><strong>«Зорлық-зомбылықсыз мектеп»</strong> бағдарламасы тәуекелді төмендетті</li>
+    <li class="fragment fade-up">Мектеп психологына <strong>ғылыми-практикалық негіз</strong> ұсынылды</li>
+  </ul>
+</section>
+
+<!-- ============================ 21. THANKS ============================ -->
+<section class="thanks-slide">
+  <h1>НАЗАРЛАРЫҢЫЗҒА</h1>
+  <div class="big">РАХМЕТ!</div>
+  <p style="font-size:.9em;opacity:.95;">Сұрақтарыңызға жауап беруге дайынмын</p>
+  <p style="font-size:.55em;opacity:.7;margin-top:2em;">Төкенова Ш.К. • Атырау, 2026</p>
+</section>
+
+</div>
+</div>
+
+<script>
+// Initialize Reveal
+Reveal.initialize({
+  hash:true,
+  slideNumber:false,
+  controls:true,
+  progress:true,
+  transition:'slide',
+  transitionSpeed:'default',
+  backgroundTransition:'fade',
+  width:1100,
+  height:680,
+  margin:.02,
+  minScale:.1,
+  maxScale:2,
+  center:true,
+});
+
+// ---------- Chart.js global config ----------
+Chart.defaults.font.family = 'Inter, Segoe UI, sans-serif';
+Chart.defaults.font.size = 13;
+Chart.defaults.color = '#333';
+
+const NAVY='#1F3A5F', ACCENT='#C93C3C', GOLD='#E0A03A', GREEN='#2E7D32', PURPLE='#8E44AD';
+
+// Helper: init chart when its slide becomes visible
+function chartOnShow(canvasId, builder){
+  let built = false;
+  const tryBuild = () => {
+    if(built) return;
+    const canvas = document.getElementById(canvasId);
+    if(canvas && canvas.offsetParent !== null){
+      builder(canvas);
+      built = true;
+    }
+  };
+  Reveal.on('slidechanged', tryBuild);
+  Reveal.on('ready', tryBuild);
+}
+
+// ---------- 8. Factors doughnut ----------
+chartOnShow('factorsChart', (c)=>{
+  new Chart(c,{
+    type:'doughnut',
+    data:{
+      labels:['Психологиялық факторлар','Әлеуметтік (отбасы, мектеп)','Биологиялық','Мәдени-құндылықтық'],
+      datasets:[{
+        data:[35,30,15,20],
+        backgroundColor:[ACCENT,NAVY,GOLD,GREEN],
+        borderWidth:3, borderColor:'#fff'
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      cutout:'55%',
+      plugins:{
+        legend:{position:'right',labels:{font:{size:14,weight:'600'},padding:15}},
+        tooltip:{callbacks:{label:(ctx)=>ctx.label+': ≈'+ctx.parsed+'%'}}
+      },
+      animation:{animateRotate:true,duration:1500,easing:'easeOutQuart'}
+    }
+  });
+});
+
+// ---------- 12. Self-esteem ----------
+chartOnShow('selfEsteemChart',(c)=>{
+  new Chart(c,{
+    type:'bar',
+    data:{
+      labels:['Төмен','Орташа','Жоғары'],
+      datasets:[{
+        label:'Оқушылар %',
+        data:[26,56,18],
+        backgroundColor:[ACCENT,NAVY,GREEN],
+        borderRadius:10, borderSkipped:false,
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>ctx.parsed.y+'%'}}},
+      scales:{y:{beginAtZero:true,max:70,ticks:{callback:v=>v+'%'}}},
+      animation:{duration:1400,easing:'easeOutBack'}
+    }
+  });
+});
+
+// ---------- 13. Depression ----------
+chartOnShow('depressionChart',(c)=>{
+  new Chart(c,{
+    type:'pie',
+    data:{
+      labels:['Депрессия жоқ','Жеңіл','Орташа','Айқын'],
+      datasets:[{
+        data:[40,30,20,10],
+        backgroundColor:[GREEN,GOLD,'#E88B3A',ACCENT],
+        borderWidth:3, borderColor:'#fff'
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{size:13,weight:'600'},padding:12}}},
+      animation:{animateRotate:true,duration:1500}
+    }
+  });
+});
+
+// ---------- 14. Anxiety ----------
+chartOnShow('anxietyChart',(c)=>{
+  new Chart(c,{
+    type:'polarArea',
+    data:{
+      labels:['Төмен (23%)','Орташа (54%)','Жоғары (23%)'],
+      datasets:[{
+        data:[23,54,23],
+        backgroundColor:['rgba(46,125,50,.7)','rgba(224,160,58,.7)','rgba(201,60,60,.7)'],
+        borderColor:[GREEN,GOLD,ACCENT], borderWidth:2
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{size:13,weight:'600'}}}},
+      scales:{r:{ticks:{display:false}}},
+      animation:{duration:1600}
+    }
+  });
+});
+
+// ---------- 15. Aggression radar ----------
+chartOnShow('aggressionRadar',(c)=>{
+  new Chart(c,{
+    type:'radar',
+    data:{
+      labels:['Физикалық','Вербалды','Жанама','Ашуланшақтық','Күдік','Негативизм','Реніш','Кінә сезімі'],
+      datasets:[{
+        label:'Орташа балл',
+        data:[5.2,6.1,4.8,6.5,5.7,4.3,5.4,4.9],
+        backgroundColor:'rgba(201,60,60,.25)',
+        borderColor:ACCENT,
+        borderWidth:3,
+        pointBackgroundColor:ACCENT,
+        pointBorderColor:'#fff',
+        pointRadius:6,
+        pointHoverRadius:9
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        r:{
+          min:0, max:10, ticks:{stepSize:2,backdropColor:'transparent'},
+          grid:{color:'#ddd'}, angleLines:{color:'#ccc'},
+          pointLabels:{font:{size:13,weight:'600'},color:NAVY}
+        }
+      },
+      animation:{duration:1800,easing:'easeOutQuart'}
+    }
+  });
+});
+
+// ---------- 16. Risk groups ----------
+chartOnShow('riskChart',(c)=>{
+  new Chart(c,{
+    type:'doughnut',
+    data:{
+      labels:['Жоғары тәуекел (23%)','Орташа тәуекел (44%)','Төмен тәуекел (33%)'],
+      datasets:[{
+        data:[23,44,33],
+        backgroundColor:[ACCENT,GOLD,GREEN],
+        borderWidth:4, borderColor:'#fff',
+        hoverOffset:10
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      cutout:'60%',
+      plugins:{
+        legend:{position:'bottom',labels:{font:{size:13,weight:'600'},padding:12}},
+      },
+      animation:{animateRotate:true, animateScale:true, duration:1800}
+    }
+  });
+});
+
+// ---------- 19. Effectiveness (before/after) ----------
+chartOnShow('effectivenessChart',(c)=>{
+  new Chart(c,{
+    type:'bar',
+    data:{
+      labels:['Жоғары мазасыздық','Жоғары агрессия','Айқын депрессия','Төмен өзін-өзі бағалау'],
+      datasets:[
+        {label:'БАСТАПҚЫ', data:[23,23,10,26], backgroundColor:ACCENT, borderRadius:8, borderSkipped:false},
+        {label:'ҚОРЫТЫНДЫ', data:[10,13,3,14], backgroundColor:GREEN, borderRadius:8, borderSkipped:false}
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{position:'top',labels:{font:{size:14,weight:'700'},boxWidth:20,padding:15}},
+        tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': '+ctx.parsed.y+'%'}},
+        title:{display:false}
+      },
+      scales:{
+        y:{beginAtZero:true,max:35,ticks:{callback:v=>v+'%'},grid:{color:'#eee'}},
+        x:{grid:{display:false}}
+      },
+      animation:{duration:1600,easing:'easeOutQuart'}
+    }
+  });
+});
+</script>
+</body>
+</html>
